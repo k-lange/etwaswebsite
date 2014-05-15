@@ -1,0 +1,25 @@
+<menu class="projects">
+	<li ng-class="{active: params.projectName === projectName}"
+			ng-repeat="(projectName, project) in projects">
+		<a href="/#/{{category}}/{{projectName}}">
+			<span>
+				{{project.title}}
+			</span>
+		</a>
+	</li>
+</menu>
+
+<div class="meta">
+	<h1>{{currentProject.title}}</h1>
+	<p class="description">{{currentProject.description}}</p>
+</div>
+
+<div class="content">
+	<div ng-bind-html="currentProject.html"></div>
+
+	<div class="images">
+		<div class="image" ng-repeat="image in currentProject.images">
+			<img img-load="{{image}}" class="loading">
+		</div>
+	</div>
+</div>
