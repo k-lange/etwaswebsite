@@ -162,7 +162,6 @@ module.exports = function(grunt) {
 
 			content[name] = grunt.file.readJSON(file);
 
-
 			for (var project in content[name]) {
 				content[name][project].html = marked(content[name][project].preview);
 				delete content[name][project].preview;     
@@ -185,9 +184,9 @@ module.exports = function(grunt) {
 
 					grunt.file.mkdir('dist/smallImages');
 
-					setTimeout(function() {
-						console.log(name, project)
-						gm(file)
+					console.log(name, project)
+					gm(file)
+						.limit('OMP_NUM_THREADS', 1)
 						.resize(30,30)
 						.write('dist/smallImages/' + fileName, function (err) {
 
@@ -212,7 +211,6 @@ module.exports = function(grunt) {
 								console.log('fehler', err);
 							}
 						});
-					}, 50 * projectIndex);
 					
 				});
 			}
