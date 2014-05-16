@@ -212,7 +212,7 @@ module.exports = function(grunt) {
 								console.log('fehler', err);
 							}
 						});
-					}, 100 * projectIndex);
+					}, 50 * projectIndex);
 					
 				});
 			}
