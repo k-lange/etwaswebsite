@@ -102,6 +102,12 @@ module.exports = function(grunt) {
         src: 'webfonts/**/*',
         dest: 'dist/',
       },
+      deploy: {
+        expand:true,
+        src: '**/*',
+        cwd: 'dist/', 
+        dest: 'foo/'
+      }
     },
     watch: {
       script: {
