@@ -185,33 +185,36 @@ module.exports = function(grunt) {
 					grunt.file.mkdir('dist/smallImages');
 
 					console.log(name, project)
-					gm(file)
-						.limit('OMP_NUM_THREADS', 1)
-						.resize(30,30)
-						.write('dist/smallImages/' + fileName, function (err) {
+					setTimeout(function () {
+						console.log('writing', fileName);
 
-							if (!err) {
+						gm(file)
+							.limit('OMP_NUM_THREADS', 1)
+							.resize(30,30)
+							.write('dist/smallImages/' + fileName, function (err) {
 
-								Datauri('dist/smallImages/' + fileName, function(err, data){
-									if(err) {
-										console.log(err);
+								if (!err) {
 
-									} else {
-										content[name][projectName].images.push({
-											file: file,
-											uri: data
-										});
-										waiting--;
-										imagesDone();
-									}
+									Datauri('dist/smallImages/' + fileName, function(err, data){
+										if(err) {
+											console.log(err);
 
-								})
+										} else {
+											content[name][projectName].images.push({
+												file: file,
+												uri: data
+											});
+											waiting--;
+											imagesDone();
+										}
 
-							} else {
-								console.log('fehler', err);
-							}
-						});
-					
+									})
+
+								} else {
+									console.log('fehler', err);
+								}
+							});
+					}, projectIndex * 200);
 				});
 			}
 		});
