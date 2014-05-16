@@ -10,7 +10,7 @@ marked.setOptions({
 	smartypants: false
 });
 
-var gm = require('gm').subClass({ imageMagick: true }).limit('threads', 1);
+var gm = require('gm').subClass({ imageMagick: true });
 var Datauri = require('datauri');
 
 module.exports = function(grunt) {
@@ -153,13 +153,15 @@ module.exports = function(grunt) {
 
 		var content = {},
 			waiting = 0,
-			done = this.async();  
+			done = this.async(); 
+			var projectIndex = 0;
 
 		grunt.file.expand('dist/page-data-*.json').forEach(function(file){
-
+			
 			var name = file.replace('dist/page-data-','').replace('.json', '');
 
 			content[name] = grunt.file.readJSON(file);
+
 
 			for (var project in content[name]) {
 				content[name][project].html = marked(content[name][project].preview);
@@ -172,9 +174,8 @@ module.exports = function(grunt) {
 						['etwasvonluise/' + name + '/' + project + '/*.png'],
 						['etwasvonluise/' + name + '/' + project + '/*.gif']).forEach(function(file){
 
-					console.log(name, project)
 					var imageSize;
-
+					projectIndex++;
 					waiting++;
 
 					var projectName = project;
@@ -184,7 +185,9 @@ module.exports = function(grunt) {
 
 					grunt.file.mkdir('dist/smallImages');
 
-					gm(file)
+					setTimeout(function() {
+						console.log(name, project)
+						gm(file)
 						.resize(30,30)
 						.write('dist/smallImages/' + fileName, function (err) {
 
@@ -208,8 +211,9 @@ module.exports = function(grunt) {
 							} else {
 								console.log('fehler', err);
 							}
-					});
-
+						});
+					}, 100 * projectIndex);
+					
 				});
 			}
 		});
