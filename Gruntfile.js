@@ -10,7 +10,7 @@ marked.setOptions({
 	smartypants: false
 });
 
-var gm = require('gm').subClass({ imageMagick: true });
+var gm = require('gm').subClass({ imageMagick: true }).limit('threads', 1);
 var Datauri = require('datauri');
 
 module.exports = function(grunt) {
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-image-resize');
 
 	var deplymentFolder = '/var/www/virtual/vonluise/html/';
-//	var deplymentFolder = 'foo';
+//	var deplymentFolder = '/Users/anykey/Desktop/foo';
 
 	var isDeployment = grunt.option('deploying') || false;
 	console.log((isDeployment) ? 'is deploying' : 'just developing...');
@@ -41,15 +41,15 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		m2j: {
-				release: {
-						options: {
-								minify: false,
-								width: 100000
-						},
-						files: {
-								'documents.json': ['etwasvonluise/**/*.md']
-						},
-				}
+			release: {
+				options: {
+					minify: false,
+					width: 100000
+				},
+				files: {
+					'documents.json': ['etwasvonluise/**/*.md']
+				},
+			}
 		},
 		less: {
 			development: {
