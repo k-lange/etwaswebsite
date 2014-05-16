@@ -9,9 +9,9 @@ marked.setOptions({
 	smartLists: true,
 	smartypants: false
 });
+
 var gm = require('gm').subClass({ imageMagick: true });
 var Datauri = require('datauri');
-
 
 module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -22,6 +22,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-image-resize');
+
+//	var deplymentFolder = '/var/www/virtual/vonluise/html/;
+	var deplymentFolder = 'foo';
 
 	var isDeployment = grunt.option('deploying') || false;
 	console.log((isDeployment) ? 'is deploying' : 'just developing...');
@@ -100,7 +103,7 @@ module.exports = function(grunt) {
 				expand: true,
 				src: ['**/*'],
 				cwd: 'dist/',
-				dest: '/var/www/virtual/vonluise/html/'
+				dest: deplymentFolder
 			} 
 		},
 		watch: {
@@ -248,9 +251,8 @@ module.exports = function(grunt) {
 
 	function addDeploymentTasks (tasks) {
 		if (isDeployment) {
-			return tasks.push('copy:deploy');
-		} else {
-			return tasks;
-		}
+			tasks.push('copy:deploy');
+		} 
+		return tasks;
 	}
 };
