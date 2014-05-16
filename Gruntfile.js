@@ -40,13 +40,13 @@ module.exports = function(grunt) {
                 width: 100000
             },
             files: {
-                'documents.json': ['documents/**/*.md']
+                'documents.json': ['etwasvonluise/**/*.md']
             },
         }
     },
     watch: {
       documents: {
-        files: ['documents/*'],
+        files: ['etwasvonluise/*'],
         tasks: ['m2j', 'parseMD']
       }, 
       less: {
@@ -95,7 +95,7 @@ module.exports = function(grunt) {
         dest: 'dist/',
       },
       images: {
-        src: ['documents/**/*.jpg','documents/**/*.png','documents/**/*.gif',],
+        src: ['etwasvonluise/**/*.jpg','etwasvonluise/**/*.png','etwasvonluise/**/*.gif',],
         dest: 'dist/',
       },
       fonts: {
@@ -121,7 +121,7 @@ module.exports = function(grunt) {
         }   
       },
       content: {
-        files: ['documents/**/*'],
+        files: ['etwasvonluise/**/*'],
         tasks: ['prepare_content', 'scripts'],
         options: {
           livereload: true,
@@ -135,7 +135,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('setm2jConfig', function(){
     var files = {};
-    grunt.file.expand('documents/*').forEach(function(dir){
+    grunt.file.expand('etwasvonluise/*').forEach(function(dir){
       if(dir.indexOf('.md') === -1) {
         var fileName = dir.split('/');
         fileName = 'dist/page-data-' + fileName[fileName.length - 1] + '.json';
@@ -143,7 +143,7 @@ module.exports = function(grunt) {
       }
     })
 
-    files['dist/page-data-static.json'] = 'documents/*.md'
+    files['dist/page-data-static.json'] = 'etwasvonluise/*.md'
 
     grunt.config.set('m2j.release.files', files);
   })
@@ -167,9 +167,9 @@ module.exports = function(grunt) {
         content[name][project].images = [];
 
         grunt.file.expand(
-            ['documents/' + name + '/' + project + '/*.jpg'],
-            ['documents/' + name + '/' + project + '/*.png'],
-            ['documents/' + name + '/' + project + '/*.gif']).forEach(function(file){
+            ['etwasvonluise/' + name + '/' + project + '/*.jpg'],
+            ['etwasvonluise/' + name + '/' + project + '/*.png'],
+            ['etwasvonluise/' + name + '/' + project + '/*.gif']).forEach(function(file){
 
           console.log(name, project)
           var imageSize;
