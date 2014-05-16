@@ -23,8 +23,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-image-resize');
 
-//	var deplymentFolder = '/var/www/virtual/vonluise/html/;
-	var deplymentFolder = 'foo';
+	var deplymentFolder = '/var/www/virtual/vonluise/html/';
+//	var deplymentFolder = 'foo';
 
 	var isDeployment = grunt.option('deploying') || false;
 	console.log((isDeployment) ? 'is deploying' : 'just developing...');
