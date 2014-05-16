@@ -12,6 +12,7 @@ marked.setOptions({
 var gm = require('gm').subClass({ imageMagick: true });
 var Datauri = require('datauri');
 
+
 module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-markdown-to-json');
@@ -21,6 +22,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-image-resize');
+
+	var isDeployment = grunt.option('deploying') || false;
+	console.log((isDeployment) ? 'is deploying' : 'just developing...');
 
 	var components = [
 		'comment.js',
@@ -102,7 +106,7 @@ module.exports = function(grunt) {
 		watch: {
 			script: {
 				files: ['src/**/*.js'],
-				tasks: ['scripts'],
+				tasks: addDeploymentTasks(['scripts']),
 				options: {
 					livereload: true,
 					spawn: false
@@ -110,7 +114,7 @@ module.exports = function(grunt) {
 			},
 			less: {
 				files: ['style/**/*.less'],
-				tasks: ['less'],
+				tasks: addDeploymentTasks(['less']),
 				options: {
 					livereload: true,
 					spawn: false
@@ -118,7 +122,7 @@ module.exports = function(grunt) {
 			},
 			content: {
 				files: ['etwasvonluise/**/*'],
-				tasks: ['prepare_content', 'scripts'],
+				tasks: addDeploymentTasks(['prepare_content', 'scripts']),
 				options: {
 					livereload: true,
 					spawn: false
@@ -201,7 +205,6 @@ module.exports = function(grunt) {
 							} else {
 								console.log('fehler', err);
 							}
-
 					});
 
 				});
@@ -215,7 +218,6 @@ module.exports = function(grunt) {
 				grunt.file.write('dist/pageContent.js', pageContent);
 				grunt.file.write('dist/pageContent.json', JSON.stringify(content));
 
-		 //   console.log(content)      
 				console.log('done with that images!');
 				done();
 			}
@@ -238,10 +240,17 @@ module.exports = function(grunt) {
 		'parseMD'
 	]);
 
-	grunt.registerTask('default', [
+	grunt.registerTask('default', addDeploymentTasks([
 		'less', 
 		'prepare_content',
 		'scripts'
-	]);
+	]));
 
+	function addDeploymentTasks (tasks) {
+		if (isDeployment) {
+			return tasks.push('copy:deploy');
+		} else {
+			return tasks;
+		}
+	}
 };
