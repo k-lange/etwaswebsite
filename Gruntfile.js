@@ -9,7 +9,7 @@ marked.setOptions({
   smartLists: true,
   smartypants: false
 });
-var gm = require('gm');
+var gm = require('gm').subClass({ imageMagick: true });
 var Datauri = require('datauri');
 
 module.exports = function(grunt) {
@@ -179,7 +179,7 @@ module.exports = function(grunt) {
           var projectName = project;
 
           // gm(file).size(function (err, size) {
-          //   if (!err) {
+          //   if (!err) {2
           //     content[name][projectName].images.push({
           //       width: size.width,
           //       height: size.height, 
@@ -213,25 +213,30 @@ module.exports = function(grunt) {
           gm(file)
             .resize(30,30)
             .write('dist/smallImages/' + fileName, function (err) {
-            if (!err) {
-              Datauri('dist/smallImages/' + fileName, function(err, data){
-                if(err) {
-                  console.log(err);
 
-                } else {
-                  content[name][projectName].images.push({
-                    file: file,
-                    uri: data
-                  });
-                  waiting--;
-                  imagesDone();
-                }
+              if (!err) {
 
-              })
-            } else {
-              console.log(err)
-            }
+                Datauri('dist/smallImages/' + fileName, function(err, data){
+                  if(err) {
+                    console.log(err);
+
+                  } else {
+                    content[name][projectName].images.push({
+                      file: file,
+                      uri: data
+                    });
+                    waiting--;
+                    imagesDone();
+                  }
+
+                })
+
+              } else {
+                console.log('fehler', err);
+              }
+
           });
+
         });
       }
     });
