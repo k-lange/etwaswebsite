@@ -23,8 +23,8 @@ var components = [
 	'./bower_components/angular-route/angular-route.js',
 	'./bower_components/angular-sanitize/angular-sanitize.js',
 	'./tmp/page.js',
-	'./tmp/templates.js',
-	'./src/**/*.js'
+	'./src/**/*.js',
+	'./tmp/templates.js'
 ];
 
 var STATIC = [
@@ -34,7 +34,10 @@ var STATIC = [
 
 gulp.task('tpl', function () {
 	gulp.src('./src/app/views/**/*.html')
-		.pipe(templateCache())
+		.pipe(templateCache({
+			root: 'src/app/views/',
+			module: 'luisesPortfolio'
+		}))
 		.pipe(gulp.dest('./tmp'));
 });
 
@@ -68,7 +71,9 @@ gulp.task('less', function () {
 gulp.task('md', function () {
     return gulp.src(MD)
         .pipe(gutil.buffer())
-        .pipe(markdown('site.json'))
+        .pipe(markdown('site.json', {
+        	breaks: true
+        }))
         .pipe(tap(function (file) {
         	global.pages = JSON.parse(file.contents.toString());
         }));
@@ -84,9 +89,9 @@ gulp.task('pict', ['md'], function () {
             imageMagick: true
         }))
         .pipe(tap(function (file, t) {
-        	var filepath = file.path.replace(__dirname + '/', '');
+        	var filepath = file.path.replace(__dirname + '/dist/', '');
         	var pathArray = filepath.split('/');
-        	(global.pages[pathArray[1]][pathArray[2]].images = global.pages[pathArray[1]][pathArray[2]].images || []).push({
+        	(global.pages[pathArray[0]][pathArray[1]].images = global.pages[pathArray[0]][pathArray[1]].images || []).push({
         		file: filepath,
         		uri: 'data:image/jpeg;base64,' + file.contents.toString('base64')
         	});

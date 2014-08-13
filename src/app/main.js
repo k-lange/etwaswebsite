@@ -77,13 +77,12 @@ portfolio.directive('imgLoad', function() {
 					element.removeClass('loading');
 			     	element[0].src = attrs.file;
 			 	};
-			 		console.log('vadf!')
 
 			 	element.on('resize', function(){
 			 		console.log('have been resized!')
 			 	})		
 
-			},1)
+			}, 1)
 
 		}
 	};
