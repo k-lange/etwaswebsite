@@ -9,6 +9,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     cached = require('gulp-cached'),
     templateCache = require('gulp-angular-templatecache'),
+    watch = require('gulp-watch'),
     fs = require('fs');
 
 var MD = './etwasvonluise/**/*.md',
@@ -105,9 +106,10 @@ gulp.task('content', ['pict'], function (callback) {
 	});
 });
 
-gulp.task('watch', ['default'], function () {
-	gulp.watch(MD, ['js']);
-	gulp.watch(PICT, ['js']);
+gulp.task('watch', function () {
+	watch({ glob: PICT }, function() {
+		gulp.start('js');
+	});
 });
 
 gulp.task('default', ['js', 'less', 'font', 'static']);
