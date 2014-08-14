@@ -19,7 +19,7 @@
 
 	<div class="images">
 		<div class="image" ng-repeat="image in currentProject.images">
-			<img img-load="{{image}}" class="loading">
+			<img img-load="{{ image.file }}" ng-src="{{ image.uri }}">
 		</div>
 	</div>
 </div>

@@ -5,10 +5,11 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     tap = require('gulp-tap'),
     less = require('gulp-less'),
-    concat = require('gulp-concat')
+    concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     cached = require('gulp-cached'),
     templateCache = require('gulp-angular-templatecache'),
+    ngAnnotate = require('gulp-ng-annotate'),
     chokidar = require('chokidar'),
     _ = require('lodash'),
     fs = require('fs');
@@ -53,8 +54,8 @@ gulp.task('tpl', function () {
 gulp.task('js', ['tpl', 'content'], function () {
 	return gulp.src(components)
 		.pipe(concat('app.js'))
+		.pipe(ngAnnotate())
 		.pipe(uglify({
-			mangle: false,
 			preserveComments: 'some'
 		}))
 		.pipe(gulp.dest(DIST));
@@ -103,10 +104,13 @@ gulp.task('pict', ['md'], function () {
         	magic.detect(file.contents, function (err, mime) {
 				if (err) throw err;
 
-	        	(global.pages[pathArray[0]][pathArray[1]].images = global.pages[pathArray[0]][pathArray[1]].images || []).push({
-	        		file: '/' + filepath,
-	        		uri: 'data:' + mime + ';base64,' + file.contents.toString('base64')
-	        	});
+				var project = global.pages[pathArray[0]][pathArray[1]],
+					image = {
+		        		file: '/' + filepath,
+		        		uri: 'data:' + mime + ';base64,' + file.contents.toString('base64')
+		        	};
+
+	        	(project.images = project.images || []).splice(_.sortedIndex(project.images, image, 'file'), 0, image);
 			});
         }));
 });

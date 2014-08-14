@@ -29,28 +29,16 @@ portfolio.config(function($routeProvider, $locationProvider) {
 portfolio.controller('mainPageCtrl', function ($scope, $route, $routeParams, $location) {
 	$scope.location = $location;
 	$scope.category = $location.url().split('/')[1];
-	console.log($route.current);
 
 	$scope.page = pageContent;
 	$scope.$route = $route;
 });
 
 portfolio.controller('home', function ($scope, $routeParams) {
-//	console.log('home', $routeParams)
 	$scope.page = pageContent;
 });
-
-/*
-portfolio.controller('grafisches', function ($scope, $route, $routeParams, $location) {
-	console.log('grafisches', $routeParams)
-	$scope.page = pageContent;
-	$scope.params = $routeParams;
-});
-*/
 
 portfolio.controller('project', function ($scope, $route, $routeParams, $location) {
-//	console.log($location.url())
-//	console.log('project', $routeParams)
 	$scope.page = pageContent;
 	$scope.params = $routeParams;
 
@@ -63,27 +51,19 @@ portfolio.controller('project', function ($scope, $route, $routeParams, $locatio
 
 portfolio.directive('imgLoad', function() {
 	return {
+		scope: {
+			url: '@imgLoad'
+		},
 		link: function(scope, element, attrs) {
 
-			setTimeout(function(){
+			var img = document.createElement('img');
+			img.src = scope.url;
 
-				attrs = JSON.parse(attrs.imgLoad);
-				element[0].src = attrs.uri;
+			img.addEventListener('load', function () {
+				img.removeEventListener('load');
 
-				img = new Image();
-				img.src = attrs.file;
-
-				img.onload = function() {
-					element.removeClass('loading');
-			     	element[0].src = attrs.file;
-			 	};
-
-			 	element.on('resize', function(){
-			 		console.log('have been resized!')
-			 	})		
-
-			}, 1)
-
+				element[0].src = scope.url;
+			});
 		}
 	};
 });
