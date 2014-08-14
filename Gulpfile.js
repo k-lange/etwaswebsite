@@ -13,8 +13,15 @@ var gulp = require('gulp'),
     _ = require('lodash'),
     fs = require('fs');
 
+var mmm = require('mmmagic'),
+	Magic = mmm.Magic,
+	magic = new Magic(mmm.MAGIC_MIME_TYPE);
+
+
+
+
 var MD = './etwasvonluise/**/*.md',
-	PICT = './etwasvonluise/**/*.jpg',
+	PICT = './etwasvonluise/**/*.{jpg,gif}',
 	LESS = './style/**/*.less',
 	FONT = './webfonts/*';
 
@@ -92,10 +99,15 @@ gulp.task('pict', ['md'], function () {
         .pipe(tap(function (file, t) {
         	var filepath = file.path.replace(__dirname + '/dist/', '');
         	var pathArray = filepath.split('/');
-        	(global.pages[pathArray[0]][pathArray[1]].images = global.pages[pathArray[0]][pathArray[1]].images || []).push({
-        		file: filepath,
-        		uri: 'data:image/jpeg;base64,' + file.contents.toString('base64')
-        	});
+
+        	magic.detect(file.contents, function (err, mime) {
+				if (err) throw err;
+
+	        	(global.pages[pathArray[0]][pathArray[1]].images = global.pages[pathArray[0]][pathArray[1]].images || []).push({
+	        		file: '/' + filepath,
+	        		uri: 'data:' + mime + ';base64,' + file.contents.toString('base64')
+	        	});
+			});
         }));
 });
 
