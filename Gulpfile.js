@@ -9,7 +9,8 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     cached = require('gulp-cached'),
     templateCache = require('gulp-angular-templatecache'),
-    watch = require('gulp-watch'),
+    chokidar = require('chokidar'),
+    _ = require('lodash'),
     fs = require('fs');
 
 var MD = './etwasvonluise/**/*.md',
@@ -107,9 +108,15 @@ gulp.task('content', ['pict'], function (callback) {
 });
 
 gulp.task('watch', function () {
-	watch({ glob: PICT }, function() {
+
+	var refresh = _.debounce(function () {
+		console.log('files changed');
 		gulp.start('js');
-	});
+	}, 500);
+
+	var watcher = chokidar.watch('./etwasvonluise', { ignored: /[\/\\]\./, persistent: true });
+	watcher.on('all', refresh);
+
 });
 
 gulp.task('default', ['js', 'less', 'font', 'static']);
