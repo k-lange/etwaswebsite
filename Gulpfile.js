@@ -83,7 +83,6 @@ gulp.task('md', function () {
 
 gulp.task('pict', ['md'], function () {
 	return gulp.src(PICT)
-		.pipe(cached('images', { optimizeMemory: true }))
 		.pipe(gulp.dest(DIST))
 		.pipe(imageResize({
             width: 30,
