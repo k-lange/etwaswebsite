@@ -8,18 +8,12 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     cached = require('gulp-cached'),
+    remember = require('gulp-remember'),
     templateCache = require('gulp-angular-templatecache'),
     ngAnnotate = require('gulp-ng-annotate'),
     chokidar = require('chokidar'),
     _ = require('lodash'),
     fs = require('fs');
-
-var mmm = require('mmmagic'),
-	Magic = mmm.Magic,
-	magic = new Magic(mmm.MAGIC_MIME_TYPE);
-
-
-
 
 var MD = './etwasvonluise/**/*.md',
 	PICT = './etwasvonluise/**/*.{jpg,gif}',
@@ -91,27 +85,30 @@ gulp.task('md', function () {
 
 gulp.task('pict', ['md'], function () {
 	return gulp.src(PICT)
+		.pipe(cached('pict', { optimizeMemory: true }))
 		.pipe(gulp.dest(DIST))
 		.pipe(imageResize({
             width: 30,
             quality: 0.1,
             imageMagick: true
         }))
-        .pipe(tap(function (file, t) {
-        	var filepath = file.path.replace(__dirname + '/dist/', '');
-        	var pathArray = filepath.split('/');
+        .pipe(tap(function (file) {
+        	file.contents = new Buffer('data:image/*;base64,' + file.contents.toString('base64'));
+        }))
+        .pipe(remember('pict'))
+        .pipe(tap(function (file) {
+        	var filepath = file.path.replace(__dirname + '/dist/', ''),
+        		pathArray = filepath.split('/');
 
-        	magic.detect(file.contents, function (err, mime) {
-				if (err) throw err;
+    		var project = global.pages[pathArray[0]][pathArray[1]],
+				image = {
+	        		file: '/' + filepath,
+	        		uri: file.contents.toString()
+	        	};
 
-				var project = global.pages[pathArray[0]][pathArray[1]],
-					image = {
-		        		file: '/' + filepath,
-		        		uri: 'data:' + mime + ';base64,' + file.contents.toString('base64')
-		        	};
-
-	        	(project.images = project.images || []).splice(_.sortedIndex(project.images, image, 'file'), 0, image);
-			});
+        	if (project) {
+        		(project.images = project.images || []).splice(_.sortedIndex(project.images, image, 'file'), 0, image);
+        	}
         }));
 });
 
@@ -125,13 +122,24 @@ gulp.task('content', ['pict'], function (callback) {
 gulp.task('watch', function () {
 
 	var refresh = _.debounce(function () {
-		console.log('files changed');
-		gulp.start('js');
+		setTimeout(function () {
+			gutil.log('files changed');
+			gulp.start('js');
+		}, 500);
 	}, 500);
 
 	var watcher = chokidar.watch('./etwasvonluise', { ignored: /[\/\\]\./, persistent: true });
-	watcher.on('all', refresh);
 
+	watcher
+		.on('all', refresh)
+		.on('unlink', function (path) {
+			gutil.log('File', path, 'has been removed');
+			if (cached.caches.pict[__dirname + '/' + path]) {
+				gutil.log('Cache for', path, 'removed');
+				delete cached.caches.pict[__dirname + '/' + path];
+			}
+			remember.forget('pict', __dirname + path.replace('etwasvonluise', '/dist'));
+		});
 });
 
 gulp.task('default', ['js', 'less', 'font', 'static']);
