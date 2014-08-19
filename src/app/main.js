@@ -60,8 +60,7 @@ portfolio.directive('imgLoad', function() {
 			img.src = scope.url;
 
 			img.addEventListener('load', function () {
-				img.removeEventListener('load');
-
+				img.removeEventListener('load', arguments.callee);
 				element[0].src = scope.url;
 			});
 		}
