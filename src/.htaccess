@@ -1,3 +1,8 @@
+RewriteEngine On
+RewriteRule ^$						index.html  [L]
+RewriteCond %{REQUEST_FILENAME}		!-f
+RewriteRule (.*)$					index.html [L]
+
 AddType application/vnd.ms-fontobject .eot
 AddType font/ttf .ttf
 AddType font/otf .otf
@@ -40,11 +45,6 @@ Header set Cache-Control "max-age=0, private, no-store, no-cache, must-revalidat
 <IfModule mod_rewrite.c>
     RewriteEngine On
  
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} !index
-    RewriteRule (.*) index.html [L]
-
     <IfModule mod_proxy_http.c>
         RewriteCond %{HTTP_USER_AGENT} baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot [NC,OR]
         RewriteCond %{QUERY_STRING} _escaped_fragment_
