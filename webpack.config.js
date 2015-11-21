@@ -24,7 +24,7 @@ module.exports = {
                 loader: 'markdown-with-front-matter'
             },
             {
-                test: /\.jpg$/,
+                test: /\.(jpg|jpeg|gif|png)$/,
                 loader: 'file-loader'
             },
             {

@@ -2,7 +2,7 @@ import { dirname, basename, extname } from 'path';
 import { groupBy, trimRight, startsWith, last, chain, uniq, indexBy } from 'lodash';
 
 const pageContext = require.context('../../etwasvonluise', true, /^\.\/.*\/.*\.md$/);
-const imageContext = require.context('../../etwasvonluise', true, /^\.\/.*\.jpg$/);
+const imageContext = require.context('../../etwasvonluise', true, /^\.\/.*\.(jpg|jpeg|gif|png)$/);
 const images = imageContext.keys();
 
 export const projects = pageContext.keys().map(getProject);
