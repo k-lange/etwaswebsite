@@ -23,7 +23,7 @@
     "react-router": "^1.0.0"
   },
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --port 3000",
     "watch": "webpack -w -d",
     "serve": "http-server dist -p 3003 -s"
   }
