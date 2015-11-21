@@ -25,14 +25,19 @@ menu {
     margin: 0;
     padding: @padding;
     height: 100%;
-    font-family: CenturyGothicStd-Bold;
+
+    li {
+        list-style-type: none;
+        margin-bottom: .5em;
+        line-height: 1.2;
+        word-spacing: 500px;
+    }
 
     &.projects {
         left: @gridWidth;
         position: absolute;
 
         li {
-            word-spacing: 500px;
             font-family: CenturyGothicStd-Italic;
         }
 
@@ -42,15 +47,11 @@ menu {
     }
 
     &.main {
+        text-transform: uppercase;
+
         .active {
             border-bottom: 1px black solid;
         }
-    }
-
-    li {
-        list-style-type: none;
-        margin-bottom: .5em;
-        line-height: 1.2;
     }
 }
 
