@@ -28,6 +28,10 @@ module.exports = {
                 loader: 'file-loader'
             },
             {
+                test: /\.woff$/,
+                loader: 'url-loader?limit=100000'
+            },
+            {
                 test: /\.jsx?$/,
                 include: srcPath,
                 loaders: ['babel']
@@ -35,7 +39,7 @@ module.exports = {
             {
                 test: /\.less$/,
                 include: srcPath,
-                loaders: ['style', 'css', 'less']
+                loaders: ['style', 'css?importLoaders=1', 'less']
             }
         ]
     },
