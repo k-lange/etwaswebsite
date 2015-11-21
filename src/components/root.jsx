@@ -12,7 +12,7 @@ class Root extends Component {
                         return (
                             <li key={category.id}>
                                 <Link activeClassName="active" to={`/${category.id}`} state={ { projects: category.projects } }>
-                                    {category.name}
+                                    <span>{category.name}</span>
                                 </Link>
                             </li>
                         );
