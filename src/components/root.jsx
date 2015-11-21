@@ -11,7 +11,7 @@ class Root extends Component {
                     {categories.map(category => {
                         return (
                             <li key={category.id}>
-                                <Link to={`/${category.id}`} state={ { projects: category.projects } }>
+                                <Link activeClassName="active" to={`/${category.id}`} state={ { projects: category.projects } }>
                                     {category.name}
                                 </Link>
                             </li>

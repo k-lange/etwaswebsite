@@ -34,23 +34,16 @@ menu {
         li {
             word-spacing: 500px;
             font-family: CenturyGothicStd-Italic;
+        }
 
-            &.active a > * {
-                font-family: CenturyGothicStd-Bold;
-            }
-
+        .active {
+            font-family: CenturyGothicStd-Bold;
         }
     }
 
     &.main {
-
-
-        li {
-
-            &.active a > * {
-                border-bottom: 1px black solid;
-            }
-
+        .active {
+            border-bottom: 1px black solid;
         }
     }
 
@@ -58,12 +51,6 @@ menu {
         list-style-type: none;
         margin-bottom: .5em;
         line-height: 1.2;
-
-
-        a {
-            display: block
-        }
-
     }
 }
 

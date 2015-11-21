@@ -19,7 +19,7 @@ class ProjectList extends Component {
                     {this.getProjects().map(project => {
                         return (
                             <li key={project.id}>
-                                <Link to={`/${this.getCategory()}/${project.id}`}>
+                                <Link activeClassName="active" to={`/${this.getCategory()}/${project.id}`}>
                                     {project.content.title}
                                 </Link>
                             </li>
