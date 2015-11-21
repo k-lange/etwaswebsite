@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, IndexLink } from 'react-router';
 
 import { categories } from 'models/projects';
 
@@ -17,6 +17,11 @@ class Root extends Component {
                             </li>
                         );
                     })}
+                    <li>
+                        <IndexLink activeClassName="active" to="/">
+                            <span>vonluise</span>
+                        </IndexLink>
+                    </li>
                 </menu>
                 {this.props.children}
             </div>
