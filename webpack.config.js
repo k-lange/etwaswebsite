@@ -46,7 +46,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-          title: 'Etwas von Luise'
+          title: 'Etwas von Luise',
+          template: 'src/index.html'
         })
     ]
 };
