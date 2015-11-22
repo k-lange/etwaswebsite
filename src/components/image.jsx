@@ -10,7 +10,7 @@ class Image extends Component {
         const {src} = this.props.image;
         this.loader = document.createElement('img');
         this.loader.src = src;
-        this.handleLoad = () => this.setState({ src });
+        this.handleLoad = () => this.setState({ src, loaded: true });
         this.loader.addEventListener('load', this.handleLoad);
     }
 
@@ -20,7 +20,7 @@ class Image extends Component {
 
     render() {
         return(
-            <img src={this.state.src} />
+            <img className={this.state.loaded ? '' : 'is-loading'} src={this.state.src} />
         )
     }
 }
