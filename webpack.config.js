@@ -24,12 +24,8 @@ module.exports = {
                 loader: 'markdown-with-front-matter'
             },
             {
-                test: /\.(jpg|jpeg|gif|png)$/,
-                loader: 'file-loader'
-            },
-            {
                 test: /\.woff$/,
-                loader: 'url-loader?limit=100000'
+                loader: 'url'
             },
             {
                 test: /\.jsx?$/,
