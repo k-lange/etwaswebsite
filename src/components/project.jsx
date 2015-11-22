@@ -21,9 +21,7 @@ class Project extends Component {
                     <div className="images">
                         {this.getProject().images.map(image => {
                             return (
-                                <div key={image.src} className="image">
-                                    <Image placeholder={image.placeholder} src={image.src} />
-                                </div>
+                                <Image key={image.src} placeholder={image.placeholder} src={image.src} />
                             );
                         })}
                     </div>
