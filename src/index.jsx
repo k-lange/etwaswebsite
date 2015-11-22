@@ -27,4 +27,7 @@ const routes = {
     ]
 };
 
-render(<Router routes={routes} />, document.body);
+const rootElement = document.createElement('div');
+document.body.appendChild(rootElement);
+
+render(<Router routes={routes} />, rootElement);
