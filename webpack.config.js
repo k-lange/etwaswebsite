@@ -6,7 +6,7 @@ var srcPath = path.resolve(__dirname, 'src');
 
 module.exports = {
     entry: {
-        'app': './src/index.jsx'
+        'app': './src/index.js'
     },
     output: {
         path: path.resolve(__dirname, './dist/'),
@@ -15,7 +15,7 @@ module.exports = {
     devtool: '#eval',
     resolve: {
         root: path.resolve(__dirname, './src/'),
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js']
     },
     module: {
         loaders: [
