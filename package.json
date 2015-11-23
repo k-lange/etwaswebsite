@@ -26,7 +26,6 @@
   },
   "scripts": {
     "start": "webpack-dev-server --port 3000",
-    "watch": "webpack -w -d",
-    "serve": "http-server dist -p 3003 -s"
+    "watch": "webpack -w -d"
   }
 }
