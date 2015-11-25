@@ -7,7 +7,8 @@ var srcPath = path.resolve(__dirname, 'src');
 module.exports = function (options) {
     options = options || {};
 
-    var filename = options.server ? 'server.js' : 'index.js';
+    var renderer  = options.renderer;
+    var filename = renderer ? 'server.js' : 'index.js';
 
     return {
         entry: {
@@ -16,8 +17,8 @@ module.exports = function (options) {
         output: {
             path: path.resolve(__dirname, './dist/'),
             filename: filename,
-            library: options.server,
-            libraryTarget: options.server ? 'commonjs2' : 'var'
+            library: renderer,
+            libraryTarget: renderer ? 'commonjs2' : 'var'
         },
         devtool: '#eval',
         resolve: {

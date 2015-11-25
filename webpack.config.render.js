@@ -1,1 +1,1 @@
-module.exports = require('./webpack.config.factory')({ server: true });
+module.exports = require('./webpack.config.factory')({ renderer: true });
