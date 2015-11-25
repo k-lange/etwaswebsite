@@ -42,7 +42,7 @@ module.exports = function (options) {
                 {
                     test: /\.less$/,
                     include: srcPath,
-                    loader: ExtractTextPlugin.extract('style', ['css?importLoaders=1', 'less'])
+                    loader: ExtractTextPlugin.extract('style', ['css', 'less'])
                 }
             ]
         },
