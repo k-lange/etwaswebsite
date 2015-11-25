@@ -28,6 +28,6 @@
   "scripts": {
     "start": "webpack-dev-server --port 3000 --content-base assets/",
     "build": "webpack",
-    "render": "webpack --config webpack.config.render.js"
+    "render": "webpack --config webpack.config.render.js && node render"
   }
 }
