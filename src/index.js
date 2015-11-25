@@ -6,7 +6,4 @@ import createBrowserHistory from 'history/lib/createBrowserHistory';
 import routes from './routes';
 import './main.less';
 
-const rootElement = document.createElement('div');
-document.body.appendChild(rootElement);
-
-render(<Router history={createBrowserHistory()} routes={routes} />, rootElement);
+render(<Router history={createBrowserHistory()} routes={routes} />, document.getElementById('root'));
