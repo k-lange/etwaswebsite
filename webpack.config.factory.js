@@ -7,10 +7,11 @@ var srcPath = path.resolve(__dirname, 'src');
 module.exports = function (options) {
     options = options || {};
 
+    var dist = options.dist;
     var renderer  = options.renderer;
     var filename = renderer ? 'server.js' : 'index.js';
 
-    return {
+    var config = {
         entry: {
             'app': './src/' + filename
         },
@@ -20,7 +21,7 @@ module.exports = function (options) {
             library: renderer,
             libraryTarget: renderer ? 'commonjs2' : 'var'
         },
-        devtool: '#eval',
+        devtool: dist ? 'source-map' : '#eval',
         resolve: {
             root: path.resolve(__dirname, './src/'),
             extensions: ['', '.js']
@@ -43,7 +44,7 @@ module.exports = function (options) {
                 {
                     test: /\.less$/,
                     include: srcPath,
-                    loader: ExtractTextPlugin.extract('style', ['css', 'less'])
+                    loader: ExtractTextPlugin.extract('style', ['css' + (dist ? '?minimize' : ''), 'less'])
                 }
             ]
         },
@@ -56,4 +57,21 @@ module.exports = function (options) {
             new ExtractTextPlugin('styles.css')
         ]
     };
+
+    if (dist) {
+        config.plugins.push(
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify('production')
+                }
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+                compressor: {
+                    warnings: false
+                }
+            })
+        );
+    }
+
+    return config;
 };

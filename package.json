@@ -28,6 +28,7 @@
   "scripts": {
     "start": "webpack-dev-server --port 3000 --content-base assets/",
     "build": "webpack",
+    "dist": "webpack --config webpack.config.dist.js",
     "render": "webpack --config webpack.config.render.js && node render"
   }
 }
