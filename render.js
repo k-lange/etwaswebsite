@@ -5,7 +5,7 @@ var mkdirp = require('mkdirp');
 var path = require('path');
 
 var pages = require('./dist/server.js');
-var template = fs.readFileSync('./assets/index.html', { encoding: 'utf8' });
+var template = fs.readFileSync('./dist/index.html', { encoding: 'utf8' });
 var outputDir = './dist';
 
 pages.forEach(function (page) {

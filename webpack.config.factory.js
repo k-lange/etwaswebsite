@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var srcPath = path.resolve(__dirname, 'src');
 
@@ -73,6 +74,14 @@ module.exports = function (options) {
                 compressor: {
                     warnings: false
                 }
+            })
+        );
+    }
+
+    if (!renderer) {
+        config.plugins.push(
+            new HtmlWebpackPlugin({
+                template: './assets/index.html'
             })
         );
     }
