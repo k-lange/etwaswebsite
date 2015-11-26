@@ -58,6 +58,10 @@ module.exports = function (options) {
         ]
     };
 
+    if (dist || renderer) {
+        process.env.BABEL_ENV = 'production';
+    }
+
     if (dist) {
         config.plugins.push(
             new webpack.DefinePlugin({
