@@ -45,7 +45,8 @@ module.exports = function (options) {
                 {
                     test: /\.less$/,
                     include: srcPath,
-                    loader: ExtractTextPlugin.extract('style', ['css' + (dist ? '?minimize' : ''), 'less'])
+                    loader: dist ? ExtractTextPlugin.extract('style', ['css?minimize', 'less']) :
+                        'style!css!less'
                 }
             ]
         },
