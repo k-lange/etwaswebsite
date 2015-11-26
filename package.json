@@ -31,6 +31,7 @@
     "start": "webpack-dev-server --port 3000 --hot",
     "build": "webpack",
     "dist": "webpack --config webpack.config.dist.js",
-    "render": "webpack --config webpack.config.render.js && node render"
+    "render": "webpack --config webpack.config.render.js && node render",
+    "dist-all": "npm run dist && npm run render"
   }
 }
