@@ -2,10 +2,7 @@ import { dirname, basename, extname } from 'path';
 import { groupBy, trimRight, startsWith, last, chain, uniq, indexBy } from 'lodash';
 
 const pageContext = require.context('../../etwasvonluise', true, /^\.\/.*\/.*\.md$/);
-const imageContext = require.context('file!../../etwasvonluise',
-    true, /^\.\/.*\.(jpg|jpeg|gif|png)$/);
-const imagePlaceholderContext = require.context('url!gm-transform?resize[]=30&quality=10!../../etwasvonluise',
-    true, /^\.\/.*\.(jpg|jpeg|gif|png)$/);
+const imageContext = require.context('../../etwasvonluise', true, /^\.\/.*\.(jpg|jpeg|gif|png)$/);
 const images = imageContext.keys();
 
 export const projects = pageContext.keys().map(getProject);
@@ -36,12 +33,7 @@ function getImages(path) {
 
     return images
         .filter(image => startsWith(image, directory))
-        .map(image => {
-            return {
-                src: imageContext(image),
-                placeholder: imagePlaceholderContext(image)
-            };
-        });
+        .map(image => imageContext(image));
 }
 
 function getCategoryName(path) {

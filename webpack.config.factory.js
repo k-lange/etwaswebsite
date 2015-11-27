@@ -38,6 +38,10 @@ module.exports = function (options) {
                     loader: 'url'
                 },
                 {
+                    test: /\.(jpg|jpeg|gif|png)$/,
+                    loader: 'image-placeholder'
+                },
+                {
                     test: /\.jsx?$/,
                     include: srcPath,
                     loaders: ['babel']
