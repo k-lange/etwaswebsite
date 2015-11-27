@@ -3,7 +3,13 @@ import React, { Component } from 'react';
 class Image extends Component {
     constructor(props) {
         super(props);
-        this.state = { src: props.image.placeholder };
+
+        const {image} = props;
+
+        this.state = {
+            src: image.placeholder,
+            aspect: (image.height / image.width * 100) + '%'
+        };
     }
 
     componentDidMount() {
@@ -20,7 +26,11 @@ class Image extends Component {
 
     render() {
         return(
-            <img className={this.state.loaded ? '' : 'is-loading'} src={this.state.src} />
+            <div className={this.state.loaded ? 'image' : 'image is-loading'}
+                style={{
+                    backgroundImage: `url(${this.state.src})`,
+                    paddingBottom: this.state.aspect
+                }} />
         )
     }
 }
