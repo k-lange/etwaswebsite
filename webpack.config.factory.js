@@ -10,15 +10,15 @@ module.exports = function (options) {
 
     var dist = options.dist;
     var renderer  = options.renderer;
-    var filename = renderer ? 'server.js' : 'index.js';
+    var filename = renderer ? 'server' : 'index';
 
     var config = {
         entry: {
-            'app': './src/' + filename
+            'app': './src/' + filename + '.js'
         },
         output: {
             path: path.resolve(__dirname, './dist/'),
-            filename: filename,
+            filename: filename + (renderer ? '' : '.[hash]') + '.js',
             library: renderer,
             libraryTarget: renderer ? 'commonjs2' : 'var'
         },
@@ -60,7 +60,7 @@ module.exports = function (options) {
             progress: true
         },
         plugins: [
-            new ExtractTextPlugin('styles.css')
+            new ExtractTextPlugin('styles.[contenthash].css')
         ]
     };
 
