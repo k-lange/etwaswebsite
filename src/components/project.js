@@ -4,21 +4,19 @@ import Image from './image';
 import { projectsMap } from 'models/projects';
 
 class Project extends Component {
-    getProject() {
-        return projectsMap[this.props.params.project];
-    }
-
     render() {
+        const { images, content} = projectsMap[this.props.params.project];
+
         return (
             <div>
                 <div className="meta">
-                    <h1>{ this.getProject().content.title }</h1>
-                    <p className="description">
-                        { this.getProject().content.description }
-                    </p>
+                    <h1>{content.title}</h1>
+                    <div className="description"
+                        dangerouslySetInnerHTML={{__html: content.__content }}>
+                    </div>
                 </div>
                 <div className="content">
-                    {this.getProject().images.map(image => {
+                    {images.map(image => {
                         return (
                             <Image key={image.src} image={image} />
                         );
