@@ -42,7 +42,7 @@ module.exports = function (options) {
                     loader: 'image-placeholder'
                 },
                 {
-                    test: /\.jsx?$/,
+                    test: /\.js$/,
                     include: srcPath,
                     loaders: ['babel']
                 },
