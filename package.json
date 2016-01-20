@@ -33,6 +33,7 @@
     "dist": "webpack --config webpack.config.dist.js",
     "render": "webpack --config webpack.config.render.js && node render",
     "dist-all": "npm run dist && npm run render",
+    "htaccess": "mkdirp dist/ && cp src/.htaccess dist/",
     "clean": "rimraf dist"
   }
 }
