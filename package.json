@@ -34,6 +34,7 @@
     "render": "webpack --config webpack.config.render.js && node render",
     "htaccess": "mkdirp dist/ && cp src/.htaccess dist/",
     "clean": "rimraf dist",
-    "build": "npm run clean && npm run htaccess && npm run dist && npm run render"
+    "build": "npm run clean && npm run htaccess && npm run dist && npm run render",
+    "deploy": "rsync -rhP dist/ vonluise@vonluise.de:/home/vonluise/html/"
   }
 }
